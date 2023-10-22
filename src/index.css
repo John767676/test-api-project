@@ -205,8 +205,8 @@ a {
 .detail-page__button {
   border: none;
   background-color: mediumspringgreen;
-  width: 60px;
-  height: 40px;
+  width: 100px;
+  height: 60px;
   border-radius: 5px;
   cursor: pointer;
 }

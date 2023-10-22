@@ -19,7 +19,7 @@ const ItemDetail = () => {
                 for (let i = 0; i<res.data.kids.length; i++) {
                     let com = await axios.get(`https://hacker-news.firebaseio.com/v0/item/${res.data.kids[i]}.json`)
                     if (!com.data.dead && !com.data.deleted) {
-                        setComments(prevState => [com.data,...prevState])
+                        setComments(prevState => [...prevState, com.data])
                     }
                 }
             }
@@ -40,7 +40,9 @@ const ItemDetail = () => {
                     <div className='detail-page'>
                         <button onClick={() => navigate(-1)} className='detail-page__button'><BiArrowBack/></button>
                         <h1 className='detail-page__header'>{data.title}</h1>
-                        <a className='detail-page__url' target='_blank' href={data.url}>Link on the article <BiLinkExternal/></a>
+                        {
+                            data.url ? (<a className='detail-page__url' target='_blank' href={data.url}>Link on the article <BiLinkExternal/></a>) : <div className='detail-page__url' style={{fontSize:'24px'}} dangerouslySetInnerHTML={{__html:`${data.text}`}}></div>
+                        }
                         <div className="detail-page__comment">
                             {
                                 comments.length>0 ? comments.map(com => (
