@@ -18,11 +18,12 @@ const ItemDetail = () => {
             if (res.data.kids) {
                 for (let i = 0; i<res.data.kids.length; i++) {
                     let com = await axios.get(`https://hacker-news.firebaseio.com/v0/item/${res.data.kids[i]}.json`)
-                    setComments(prevState => [com.data, ...prevState])
+                    if (!com.data.dead && !com.data.deleted) {
+                        setComments(prevState => [com.data,...prevState])
+                    }
                 }
             }
             setData(res.data)
-            console.log(comments);
         } catch (e) {
             console.log(e);
         }
@@ -43,8 +44,7 @@ const ItemDetail = () => {
                         <div className="detail-page__comment">
                             {
                                 comments.length>0 ? comments.map(com => (
-                                    <div key={com.id} className='detail-page__comments' dangerouslySetInnerHTML={{__html:`${com.text}`}}></div>
-                                    // <Comment key={com.id} data={com}/>
+                                    <Comment key={com.id} data={com}/>
                                 ))
                                     : <h1>No comments found</h1>
                             }
