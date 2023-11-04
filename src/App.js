@@ -1,28 +1,21 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {BrowserRouter, Routes, Route} from "react-router-dom";
 import Navbar from "./Components/Navbar";
 import Main from "./Components/Main";
 import Footer from "./Components/Footer";
-import axios from "axios";
 import ItemDetail from "./pages/ItemDetail";
+import {useDispatch} from "react-redux";
+import {postLoad} from "./store/actions/postLoad";
 
 const App = () => {
 
-    const [posts,setPosts] = useState([])
-
-        const fetchData = async () => {
-            const res = await axios.get('https://hacker-news.firebaseio.com/v0/newstories.json')
-            setPosts(res.data.slice(0, 100))
-        }
+    const dispatch = useDispatch()
 
     useEffect(() => {
-
-        fetchData()
-
+        dispatch(postLoad())
         const intervalId = setInterval(() => {
-            fetchData();
-        }, 60000);
-
+            dispatch(postLoad())
+                }, 60000);
         return () => clearInterval(intervalId);
     }, [])
 
@@ -31,7 +24,7 @@ const App = () => {
             <BrowserRouter>
                 <Navbar />
                 <Routes>
-                    <Route path='/' element={<Main posts={posts} fetchData={fetchData}/>}/>
+                    <Route path='/' element={<Main/>}/>
                     <Route path='/:id' element={<ItemDetail/>}/>
                 </Routes>
                 <Footer />

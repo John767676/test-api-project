@@ -1,25 +1,37 @@
-import React, {useState} from 'react';
+import React from 'react';
 import MainItem from "./MainItem";
 import {AiOutlineReload} from 'react-icons/ai'
+import {useDispatch, useSelector} from "react-redux";
+import {postLoad} from "../../store/actions/postLoad";
+import {setFilter} from "../../store/actions/filterAction";
 
-const MainList = ({posts = {}, fetchData}) => {
+const MainList = () => {
 
-    const [loading,setLoading] = useState(false)
+    const dispatch = useDispatch()
+    const loading = useSelector(state => state.loadingStatus.loading)
+    const filter = useSelector(state => state.makeFilter.filterBy)
+    const posts = useSelector(state => (
+        filter === 'date' && state.postList.posts ? state.postList.posts.sort((a,b) => b.time - a.time) : state.postList.posts.sort((a,b) => b.score - a.score)
+    ))
 
     const handleClick = () => {
-        fetchData()
-        setLoading(true)
+        dispatch(postLoad())
     }
 
     return (
         <div className="post__main">
             <div className="post__mainBlock">
                 <h1 className='post__mainHeader'>Latest news</h1>
+                <div className="post__selector-container">
+                    <select onChange={e => dispatch(setFilter(e.target.value))} className='post__select'>
+                        <option value="date" selected={filter === 'date' ? 'date' : null}>by date</option>
+                        <option value="score" selected={filter === 'score' ? 'score' : null}>by score</option>
+                    </select>
+                </div>
                 <button
                         className={loading ? 'post__reload rotate' : 'post__reload'}
                         onClick={handleClick}
                         title='Reload'
-                        onAnimationEnd={() => setLoading(false)}
                 >
                     <AiOutlineReload size='35px'/>
                 </button>
@@ -27,7 +39,7 @@ const MainList = ({posts = {}, fetchData}) => {
             <div className='posts__list'>
                 {
                     posts.length === 0 ? <h1>Loading</h1> : posts.map(el => {
-                        return <MainItem key={el} id={el}/>
+                        return <MainItem key={el.id} post={el}/>
                     })
                 }
             </div>

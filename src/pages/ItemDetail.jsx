@@ -9,6 +9,7 @@ const ItemDetail = () => {
 
     const param = useParams()
     const navigate = useNavigate(-1)
+
     const [data,setData] = useState({})
     const [comments,setComments] = useState([])
 
@@ -31,7 +32,7 @@ const ItemDetail = () => {
 
     useEffect(() => {
         fetchData()
-    }, [param.id])
+    }, [])
 
     return (
         <>
@@ -45,7 +46,7 @@ const ItemDetail = () => {
                         }
                         <div className="detail-page__comment">
                             {
-                                comments.length>0 ? comments.map(com => (
+                                comments.length>0 ? comments.sort((a,b) => b.time - a.time).map(com => (
                                     <Comment key={com.id} data={com}/>
                                 ))
                                     : <h1>No comments found</h1>
