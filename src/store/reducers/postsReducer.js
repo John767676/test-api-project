@@ -1,6 +1,7 @@
 import {GET_LIST} from "../types/types";
 
 const initialState = {
+    loading: false,
     posts: [],
 }
 
@@ -10,6 +11,7 @@ export const getPostReducer = (state = initialState, action) => {
             return {
             ...state,
             posts: action.payload,
+            loading: true
             }
         default:
             return state

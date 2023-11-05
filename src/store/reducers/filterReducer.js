@@ -1,16 +1,11 @@
 import {SET_FILTER} from "../types/types";
 
-const initialState = {
-    filterBy: 'date'
-}
+const initialState = 'date'
 
 export const filterReducer = (state = initialState, action) => {
     switch (action.type) {
         case SET_FILTER:
-            return {
-                ...state,
-                filterBy: action.filter
-            }
+            return action.filter
         default:
             return state
     }

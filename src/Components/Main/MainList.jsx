@@ -8,10 +8,13 @@ import {setFilter} from "../../store/actions/filterAction";
 const MainList = () => {
 
     const dispatch = useDispatch()
-    const loading = useSelector(state => state.loadingStatus.loading)
-    const filter = useSelector(state => state.makeFilter.filterBy)
+
+    const loading = useSelector(state => state.postList.loading)
+    const filter = useSelector(state => state.makeFilter)
     const posts = useSelector(state => (
-        filter === 'date' && state.postList.posts ? state.postList.posts.sort((a,b) => b.time - a.time) : state.postList.posts.sort((a,b) => b.score - a.score)
+        (filter === 'date' && state.postList.posts.some(obj => obj !== null))   ?
+            state.postList.posts.sort((a,b) => b.time - a.time) :
+            state.postList.posts.sort((a,b) => b.score - a.score)
     ))
 
     const handleClick = () => {
@@ -24,8 +27,8 @@ const MainList = () => {
                 <h1 className='post__mainHeader'>Latest news</h1>
                 <div className="post__selector-container">
                     <select onChange={e => dispatch(setFilter(e.target.value))} className='post__select'>
-                        <option value="date" selected={filter === 'date' ? 'date' : null}>by date</option>
-                        <option value="score" selected={filter === 'score' ? 'score' : null}>by score</option>
+                        <option value="date" selected={filter === 'date' ? 'date' : null}>sort by date</option>
+                        <option value="score" selected={filter === 'score' ? 'score' : null}>sort by raiting</option>
                     </select>
                 </div>
                 <button
