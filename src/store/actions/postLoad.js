@@ -7,7 +7,7 @@ export function postLoad() {
         const postsList = []
         const res = await axios.get('https://hacker-news.firebaseio.com/v0/newstories.json')
         await Promise.all(res.data.slice(0,100).map(function(el) {
-            return  axios.get(`https://hacker-news.firebaseio.com/v0/item/${el}.json`).then(res => postsList.push(res.data))
+            return  axios.get(`https://hacker-news.firebaseio.com/v0/item/${el}.json`).then(({data}) => postsList.push(data))
         }))
         dispatch({
             type: GET_LIST,

@@ -12,10 +12,13 @@ const App = () => {
     const dispatch = useDispatch()
 
     useEffect(() => {
+
         dispatch(postLoad())
+
         const intervalId = setInterval(() => {
             dispatch(postLoad())
                 }, 60000);
+
         return () => clearInterval(intervalId);
     }, [])
 

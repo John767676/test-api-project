@@ -39,7 +39,9 @@ const ItemDetail = () => {
             {
                 data.time ? (
                     <div className='detail-page'>
-                        <button onClick={() => navigate(-1)} className='detail-page__button'><BiArrowBack/></button>
+                        <button onClick={() => navigate(-1)} className='detail-page__button'>
+                            <BiArrowBack/>
+                        </button>
                         <h1 className='detail-page__header'>{data.title}</h1>
                         {
                             data.url ? (<a className='detail-page__url' target='_blank' href={data.url}>Link on the article <BiLinkExternal/></a>) : <div className='detail-page__url' style={{fontSize:'24px'}} dangerouslySetInnerHTML={{__html:`${data.text}`}}></div>

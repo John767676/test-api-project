@@ -9,12 +9,12 @@ const Comment = ({data}) => {
     const [onShow,setOnShow] = useState(initialOpen)
 
     const getCommentReplies = async () => {
+        setOnShow(!onShow)
         for (let i = 0; i<data.kids.length; i++) {
             const comms = await axios.get(`https://hacker-news.firebaseio.com/v0/item/${data.kids[i]}.json`)
             if (!comms.data.dead && !comms.data.deleted) {
                 setKidComment(prevState => [...prevState,comms.data])
             }
-            setOnShow(!onShow)
         }
     }
 
