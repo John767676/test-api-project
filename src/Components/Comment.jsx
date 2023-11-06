@@ -10,11 +10,14 @@ const Comment = ({data}) => {
 
     const getCommentReplies = async () => {
         setOnShow(!onShow)
-        for (let i = 0; i<data.kids.length; i++) {
-            const comms = await axios.get(`https://hacker-news.firebaseio.com/v0/item/${data.kids[i]}.json`)
-            if (!comms.data.dead && !comms.data.deleted) {
-                setKidComment(prevState => [...prevState,comms.data])
-            }
+        if (data.kids.length) {
+            data.kids.map(async el => (
+                await axios.get(`https://hacker-news.firebaseio.com/v0/item/${el}.json`).then(({data}) => {
+                    if (!data.dead && !data.deleted) {
+                        setKidComment(prevState => [...prevState, data])
+                    }
+                })
+            ) )
         }
     }
 
@@ -32,7 +35,7 @@ const Comment = ({data}) => {
                     <div className="detail-page__comments-time">{new Date(data.time * 1000).toLocaleTimeString('ua-UA')}</div>
                 </div>
                 {
-                    onShow ? kidComment.map(com => <Comment key={com.id} data={com}/>): null
+                    onShow ? kidComment.map(com => <Comment key={com.id} data={com}/>) : null
                 }
             </div>
         </>
