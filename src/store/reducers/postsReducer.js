@@ -2,7 +2,7 @@ import {GET_LIST, SET_LOAD} from "../types/types";
 
 const initialState = {
     loading: false,
-    posts: [],
+    posts: []
 }
 
 export const getPostReducer = (state = initialState, action) => {
