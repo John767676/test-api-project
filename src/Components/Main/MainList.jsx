@@ -12,9 +12,10 @@ const MainList = () => {
     const loading = useSelector(state => state.postList.loading)
     const filter = useSelector(state => state.makeFilter)
     const posts = useSelector(state => (
-        (filter === 'date' && !state.postList.posts.includes(null))   ?
+        !state.postList.posts.includes(null) ?
+        (filter === 'date' )   ?
             state.postList.posts.sort((a,b) => b.time - a.time) :
-            state.postList.posts.sort((a,b) => b.score - a.score)
+            state.postList.posts.sort((a,b) => b.score - a.score) : null
     ))
 
     const handleClick = () => {
