@@ -28,7 +28,7 @@ const MainList = () => {
                 <div className="post__selector-container">
                     <select onChange={e => dispatch(setFilter(e.target.value))} className='post__select'>
                         <option value="date" selected={filter === 'date' ? 'date' : null}>sort by date</option>
-                        <option value="score" selected={filter === 'score' ? 'score' : null}>sort by raiting</option>
+                        <option value="score" selected={filter === 'score' ? 'score' : null}>sort by rating</option>
                     </select>
                 </div>
                 <button

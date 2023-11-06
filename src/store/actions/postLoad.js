@@ -1,9 +1,13 @@
 import axios from "axios";
-import {GET_LIST} from "../types/types";
+import {GET_LIST, SET_LOAD} from "../types/types";
 
 
 export function postLoad() {
     return async dispatch => {
+        dispatch({
+            type: SET_LOAD,
+            payload: false
+        })
         const postsList = []
         const res = await axios.get('https://hacker-news.firebaseio.com/v0/newstories.json')
         await Promise.all(res.data.slice(0,100).map(function(el) {
