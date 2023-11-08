@@ -2,8 +2,8 @@ import React from 'react';
 import MainItem from "./MainItem";
 import {AiOutlineReload} from 'react-icons/ai'
 import {useDispatch, useSelector} from "react-redux";
-import {postLoad} from "../../store/actions/postLoad";
-import {setFilter} from "../../store/actions/filterAction";
+import {getPosts} from "../../Features/Posts/postsSlice";
+import {setFilter} from "../../Features/Filters/filterSlice";
 
 const MainList = () => {
 
@@ -12,14 +12,14 @@ const MainList = () => {
     const loading = useSelector(state => state.postList.loading)
     const filter = useSelector(state => state.makeFilter)
     const posts = useSelector(state => (
-        !state.postList.posts.includes(null) ?
-        (filter === 'date' )   ?
-            state.postList.posts.sort((a,b) => b.time - a.time) :
-            state.postList.posts.sort((a,b) => b.score - a.score) : null
+        state.postList.posts ?
+        (filter === 'date')   ?
+            state.postList.posts.slice().sort((a,b) => b.time - a.time) :
+            state.postList.posts.slice().sort((a,b) => b.score - a.score) : null
     ))
 
     const handleClick = () => {
-        dispatch(postLoad())
+        dispatch(getPosts())
     }
 
     return (
@@ -34,6 +34,7 @@ const MainList = () => {
                 </div>
                 <button
                         className={loading ? 'post__reload rotate' : 'post__reload'}
+                        disabled={!!loading}
                         onClick={handleClick}
                         title='Reload'
                 >
@@ -42,7 +43,7 @@ const MainList = () => {
             </div>
             <div className='posts__list'>
                 {
-                    posts.length === 0 ? <h1>Loading</h1> : posts.map(el => {
+                    (posts === null || posts.length === 0) ? <h1>Loading</h1> : posts.map(el => {
                         return <MainItem key={el.id} post={el}/>
                     })
                 }

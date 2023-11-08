@@ -5,7 +5,7 @@ import Main from "./Components/Main";
 import Footer from "./Components/Footer";
 import ItemDetail from "./pages/ItemDetail";
 import {useDispatch} from "react-redux";
-import {postLoad} from "./store/actions/postLoad";
+import {getPosts} from "./Features/Posts/postsSlice";
 
 const App = () => {
 
@@ -13,13 +13,14 @@ const App = () => {
 
     useEffect(() => {
 
-        dispatch(postLoad())
+        dispatch(getPosts())
 
         const intervalId = setInterval(() => {
-            dispatch(postLoad())
+            dispatch(getPosts())
                 }, 60000);
 
         return () => clearInterval(intervalId);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     return (

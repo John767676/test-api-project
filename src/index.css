@@ -118,6 +118,30 @@ a {
   gap: 25px;
 }
 
+@media screen and (max-width: 767px) {
+  .navbar {
+    width: 700px;
+  }
+  .news {
+    width: 700px;
+  }
+  .posts__list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .navbar {
+    width: 600px;
+  }
+  .news {
+    width: 600px;
+  }
+  .posts__list {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+
 .post__item {
   display: flex;
   flex-direction: column;

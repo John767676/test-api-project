@@ -1,7 +1,11 @@
-import {applyMiddleware, createStore, compose} from "redux";
-import {rootReducer} from "./reducers";
-import thunk from "redux-thunk";
+import {configureStore} from "@reduxjs/toolkit";
+import {filterReducer} from "../Features/Filters/filterSlice";
+import {postReducer} from "../Features/Posts/postsSlice";
 
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-
-export const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunk)))
+export const store = configureStore({
+    reducer: {
+        postList: postReducer,
+        makeFilter: filterReducer
+    },
+    devTools: true
+})
